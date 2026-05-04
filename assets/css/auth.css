@@ -1,0 +1,11 @@
+.auth-body{
+    height: 130vh;
+    background-color: rgb(179, 245, 212) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-container{
+    background-color: rgb(188, 217, 241);
+}
