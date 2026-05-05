@@ -1,3 +1,22 @@
+<?php include '../includes/header.php';?>
+<?php include '../includes/auth_functions.php'; ?>
+<?php
+        session_start();
+ ?>
+
+
+<?php
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        loginUser($email, $password);
+    }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +26,6 @@
     <title>Login Page</title>
 </head>
 <body class="auth-body">
-
-<?php include '../includes/header.php'; ?>
-
-<?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-?>
 
 <div class="container border border-primary rounded p-5 w-50 fw-bold auth-container">
 
@@ -27,7 +38,7 @@
         </div>
     <?php unset($_SESSION['error']); endif; ?>
 
-    <form id="loginForm" method="post" action="login_process.php">
+    <form id="loginForm" method="post" action="login.php">
         <div class="form-group">
             <label class="mt-2">Email address</label>
             <input type="email" name="email" class="form-control mt-2" required>
