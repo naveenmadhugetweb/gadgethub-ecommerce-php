@@ -46,7 +46,7 @@ require '../config/database.php';
             exit;
         }
     }
-    
+
     function register($name, $email, $password, $conpassword) {
         global $conn;
 
@@ -74,6 +74,24 @@ require '../config/database.php';
                 exit;
         }
         
+    }
+
+    function forgotPassword($email){
+        global $conn;
+
+        $query = "SELECT email FROM users WHERE email='$email'";
+        $result = mysqli_query($conn, $query);
+        // var_dump($result, "|||" , $result->num_rows); exit;
+        if($result->num_rows > 0){
+            // var_dump("hi");exit;
+            header("Location: reset-password.php");
+            exit;
+        }else{
+            // var_dump("else");exit;
+            $_SESSION['error'] = "email mismatch";
+            header("Location: forgot-password.php");
+            exit;
+        }
     }
 
 
