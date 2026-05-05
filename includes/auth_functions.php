@@ -145,7 +145,7 @@ require '../config/database.php';
                     // $mail->send();
 
                 // store email in session for verification step
-                // $_SESSION['verify_email'] = $email;
+                $_SESSION['verify_email'] = $email;
                 $_SESSION['message'] = "we have sented verification code to your mail id";
 
                 // Update users
@@ -169,6 +169,32 @@ require '../config/database.php';
                 header("Location: forgot-password.php");
                 exit;
         }
+    }
+
+    function verifyOTP($otp, $email){
+        global $conn;
+        $query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        
+        if ($result && mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result); // fetch row as array
+            // var_dump($email, "||", $otp, $user['name'], $user['code'], $otp); exit; // access column
+
+            if($user['code'] == $otp){
+                header("Location: ../index.php");
+                exit;
+            }else{
+                $_SESSION['error'] = "wrong verification code! check your mail";
+                header("Location: reset-password.php");
+                exit;
+            }
+        } else {
+            // echo "User not found";
+            $_SESSION['error'] = "Something went wrong! login again";
+            header("Location: reset-password.php");
+            exit;
+        }
+
     }
 
 
