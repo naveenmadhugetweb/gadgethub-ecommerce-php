@@ -1,3 +1,17 @@
+<?php include '../includes/header.php'; ?>
+<?php include '../includes/auth_functions.php'; ?>
+<?php
+        session_start();
+ ?>
+<?php
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST['email'];
+        forgotPassword($email);
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +28,14 @@
 
     <h2 class="text text-primary text-center">Code Verification</h2>
     <p class="text-center">Enter verification code that sent a email address</p>
-    <form id="loginForm" action="new-password.php" method="post">
+
+    <?php if (isset($_SESSION['message'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['message']; ?>
+        </div>
+    <?php unset($_SESSION['message']); endif; ?>
+
+    <form id="loginForm" action="reset-password.php" method="post">
         <div class="form-group">
             <label class="mt-2">Enter verification code</label>
             <input type="number" class="form-control mt-2" required>

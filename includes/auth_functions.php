@@ -1,5 +1,15 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require '../includes/PHPMailer/src/Exception.php';
+require '../includes/PHPMailer/src/PHPMailer.php';
+require '../includes/PHPMailer/src/SMTP.php';
+
+
+
 require '../config/database.php';
 
     function loginUser($email, $password) {
@@ -83,14 +93,81 @@ require '../config/database.php';
         $result = mysqli_query($conn, $query);
         // var_dump($result, "|||" , $result->num_rows); exit;
         if($result->num_rows > 0){
-            // var_dump("hi");exit;
-            header("Location: reset-password.php");
-            exit;
+
+             // Hash password
+            // $password = password_hash($password, PASSWORD_DEFAULT);
+        
+            // Generate OTP
+            $code = rand(100000, 999999);
+        
+            // Insert user with OTP
+            $query = "UPDATE  users set code ='$code' WHERE email='$email'";
+            $result = mysqli_query($conn, $query);
+            if($result){
+
+                //Create an instance; passing `true` enables exceptions
+                $mail = new PHPMailer(true);
+
+                try {
+
+                    //Server settings
+                    //$mail->SMTPDebug = 0; //SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'naveenmpvkn1717@gmail.com';                     //SMTP username
+                    $mail->Password   = 'hsscykwebhtxpksw';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                    // var_dump("cursor here  sent"); exit;
+
+                    //Recipients
+                    $mail->setFrom('naveenmadhu8870@gmail.com', 'Mailer From GadgetHub');
+                    $mail->addAddress('naveenmadhu8870@gmail.com', 'Naveen');     //Add a recipient
+                    // $mail->addAddress('ellen@example.com');                    //Name is optional
+                    $mail->addReplyTo('naveenvisionmpvkn@gmail.com', 'Information');   // Reply to mail id when receipient reply 
+                    $mail->addCC('cc@example.com');
+                    $mail->addBCC('bcc@example.com');
+
+                    // var_dump("cursor here  sent"); exit;
+
+                    //Attachments
+                    // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+                    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+                    //Content
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = 'Here is the subject';
+                    $mail->Body    = 'This is the HTML message body <b>in bold! Code is : '. $code .' </b>';
+                    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                    // $mail->send();
+
+                // store email in session for verification step
+                // $_SESSION['verify_email'] = $email;
+                $_SESSION['message'] = "we have sented verification code to your mail id";
+
+                // Update users
+                $query = "UPDATE  users set verified ='1' WHERE email='$email'";
+                mysqli_query($conn, $query);
+
+                header("Location: reset-password.php");
+                exit;
+
+                } catch (Exception $e) {
+                    // var_dump("else");exit;
+
+                    $_SESSION['error'] = "Message could not be sent. Mailer Error Check Valid both mails";
+                    header("Location: forgot-password.php");
+                    exit;
+                }                   
+            }
         }else{
-            // var_dump("else");exit;
-            $_SESSION['error'] = "email mismatch";
-            header("Location: forgot-password.php");
-            exit;
+                // var_dump("else");exit;
+                $_SESSION['error'] = "Enter correct email id";
+                header("Location: forgot-password.php");
+                exit;
         }
     }
 
