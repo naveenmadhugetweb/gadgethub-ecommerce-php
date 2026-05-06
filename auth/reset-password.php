@@ -6,8 +6,10 @@
 <?php
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST['email'];
-        forgotPassword($email);
+        $otp = $_POST['opt'];
+        $email = $_SESSION['verify_email'];
+        // var_dump($email , "||", $otp);
+        verifyOTP($otp, $email);
     }
 
 ?>
@@ -35,10 +37,16 @@
         </div>
     <?php unset($_SESSION['message']); endif; ?>
 
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['error']; ?>
+        </div>
+    <?php unset($_SESSION['error']); endif; ?>
+
     <form id="loginForm" action="reset-password.php" method="post">
         <div class="form-group">
             <label class="mt-2">Enter verification code</label>
-            <input type="number" class="form-control mt-2" required>
+            <input type="number" name="opt" class="form-control mt-2" required>
         </div>
 
         <button class="btn btn-primary d-block w-100 mt-2 fw-bold"> Submit </button>
