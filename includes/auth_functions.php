@@ -25,8 +25,8 @@ require '../config/database.php';
         if ($user = mysqli_fetch_assoc($result)) {
 
                 // Store session
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_id'] = $user['id'];         // for auth check
+                $_SESSION['user_email'] = $user['email'];   // for auth check
 
                 // var_dump('hi', $_SESSION['user_id'] ,$_SESSION['user_email'] );
                 // exit; 
