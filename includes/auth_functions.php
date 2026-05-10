@@ -24,19 +24,55 @@ require '../config/database.php';
 
         if ($user = mysqli_fetch_assoc($result)) {
 
-                // Store session
-                $_SESSION['user_id'] = $user['id'];         // for auth check
-                $_SESSION['user_email'] = $user['email'];   // for auth check
-
                 // var_dump('hi', $_SESSION['user_id'] ,$_SESSION['user_email'] );
                 // exit; 
                 if($user['email'] == $email){
                     if($user['password'] == $password){
                         // var_dump("password matched"); exit;
 
+                        $sql = "SELECT 
+                                    users.id,
+                                    users.name,
+                                    users.email,
+                                    users.role_id,
+                                    roles.role_name
+                                FROM users
+                                JOIN roles ON users.role_id = roles.id
+                                WHERE users.email='$email'
+                                AND users.password='$password'
+                                AND users.status = 1
+                                LIMIT 1
+                                ";
+
+                        $selectResult = mysqli_query($conn, $sql);
+                        $userData = mysqli_fetch_assoc($selectResult);
+                        if($userData){
+                            // STORE SESSION
+                            $_SESSION['user_id'] = $userData['id'];
+                            $_SESSION['user_name'] = $userData['name'];
+                            // $_SESSION['user_email'] = $userData['email'];
+                            // $_SESSION['role_id'] = $userData['role_id'];
+                            $_SESSION['role'] = $userData['role_name'];
+                        // var_dump("password matched"); exit;
+
+                            // ROLE BASED REDIRECT
+                            if($userData['role_name'] == 'admin'){
+                                header("Location: ../admin/dashboard.php");
+                            }
+                            elseif($userData['role_name'] == 'seller'){
+                                header("Location: seller/dashboard.php");
+                            }
+                            else{   // user location
+                                header("Location: ../index.php");
+                            }
+
+                        }else{
+                            echo "Invalid Login"; exit;
+                        }
+
                         // Redirect to dashboard/home
-                        header("Location: ../index.php");
-                        exit();                                     // exit() stmt must after header();
+                        // header("Location: ../index.php");
+                        // exit();                                     // exit() stmt must after header();
                     }else{
                         // var_dump("invalid password"); exit;
                         $_SESSION['error'] = "Invalid password";
@@ -64,7 +100,7 @@ require '../config/database.php';
         
         if($password == $conpassword){
  
-            $query = "INSERT INTO users (name, email, password) values ('$email', '$email', '$password')";
+            $query = "INSERT INTO users (name, email, password) values ('$name', '$email', '$password')";
             $result = mysqli_query($conn, $query);
             if($result){
                 //var_dump("inserted"); exit;
