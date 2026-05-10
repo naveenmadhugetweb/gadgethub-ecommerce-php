@@ -15,7 +15,7 @@ if (isset($_POST['add_product'])) {
 
     $id =  $_POST['categoryId'];
     if($id == null){
-        $_SESSION['error'] = "Please select other options";
+        $_SESSION['error'] = "Please select options";
         header("Location: ../admin/add-product.php"); exit;
     }else{
         $sql = "SELECT category_name FROM categories WHERE id = $id";
@@ -26,7 +26,7 @@ if (isset($_POST['add_product'])) {
         $cName =  $categoryData['category_name'];
         // var_dump("hi", $_POST, "hii", $_POST['categoryId']);exit;
 
-        if($cName == 'Earbuds'){
+        if($cName == 'earbuds'){
 
             // $_SESSION['user_id'] = $userData['id'];
             // $_SESSION['user_name'] = $userData['name'];
@@ -53,7 +53,7 @@ if (isset($_POST['add_product'])) {
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h4>Give Product Detail</h4>
+                    <h4>Details about Which Category to add Product</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="add-product.php">
