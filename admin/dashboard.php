@@ -90,6 +90,18 @@ $products = mysqli_query($conn, $sql);
 
     <!-- Products Table -->
     <div class="table-container">
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger">
+                    <?= $_SESSION['error']; ?>
+                </div>
+            <?php unset($_SESSION['error']); endif; ?>
+
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success">
+                    <?= $_SESSION['success']; ?>
+                </div>
+            <?php unset($_SESSION['success']); endif; ?>
+
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="fw-bold mb-0">
                 Products List
@@ -175,7 +187,7 @@ $products = mysqli_query($conn, $sql);
                             <a 
                                 href="delete-product.php?id=<?= $row['id']; ?>" 
                                 class="btn btn-danger btn-sm"
-                                onclick="return confirm('Delete this product?')"
+                                onclick="return confirm('Are You sure Delete this product?')"
                             >
                                 <i class="bi bi-trash"></i>
                             </a>

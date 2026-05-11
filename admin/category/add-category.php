@@ -1,12 +1,14 @@
 <?php
 session_start();
-if ($_SESSION['role'] !== 'admin') {
-    die("Access denied");
-}
 
 include '../../config/database.php';
 include '../../includes/header.php';
 include '../../includes/admin_functions.php';
+
+
+if ($_SESSION['role'] !== 'admin') {
+    die("Access denied");
+}
 
 if (isset($_POST['add_category'])) {
 
@@ -24,6 +26,13 @@ if (isset($_POST['add_category'])) {
                     <h4>Add Category</h4>
                 </div>
                 <div class="card-body">
+
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="alert alert-success">
+                            <?= $_SESSION['success']; ?>
+                        </div>
+                    <?php unset($_SESSION['success']); endif; ?>
+
                     <form method="POST" action="add-category.php">
 
                         <div class="mb-3">
@@ -36,7 +45,10 @@ if (isset($_POST['add_category'])) {
                         </div>
                         <button type="submit" name="add_category" class="btn btn-success">
                             Add Category
-                        </button>
+                        </button>                        
+                        <a href="../brand/add-brand.php"class="btn btn-success">
+                            Add brand
+                        </a>
                         <a href="../dashboard.php" class="btn btn-secondary">
                             Back
                         </a>
