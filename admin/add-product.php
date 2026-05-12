@@ -32,6 +32,8 @@ if (isset($_POST['add_product'])) {
             // $_SESSION['user_name'] = $userData['name'];
             header("Location: ../admin/category/earbuds-details.php");exit;
         }elseif($cName == 'Smartphones'){
+
+            header("Location: ../admin/products/add-smartphones-details.php");exit;
             var_dump("hi");exit;
         }
         elseif($cName == 'Laptops'){
