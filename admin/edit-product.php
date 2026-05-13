@@ -39,7 +39,21 @@ if($categoryName == 'earbuds'){
     header("Location: ../admin/products/edit-earbuds-details.php");
 }
 elseif($categoryName = 'smartphones'){
-    var_dump("smartphones your seleted not options will added yet to update");exit;
+    
+    $productId = $product['id'];
+    // var_dump("his", $productId);exit;
+    $sql = "SELECT * FROM smartphone_details WHERE product_id = $productId";
+    $result = mysqli_query($conn, $sql);
+    $smartphonData = mysqli_fetch_assoc($result);
+
+    // var_dump("his", $productId, $smartphonData);exit;
+
+    $_SESSION['product'] = $product;
+    $_SESSION['smartphonData'] = $smartphonData;
+
+    header("Location: ../admin/products/edit-smartphone-details.php");
+
+    // var_dump("smartphones your seleted not options will added yet to update");exit;
 }
 elseif($categoryName = 'laptops'){
     var_dump("smartphones your seleted not options will added yet to update");exit;
