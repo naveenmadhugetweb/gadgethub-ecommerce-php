@@ -143,8 +143,13 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
 
                 <!-- Products Grid -->
-                <div class="row g-3 mb-5" id="productsContainer">
-                    <!-- Products will be loaded here -->
+                <div class="row g-3 mb-5" id="result">
+                     Products will be loaded here
+                </div>
+
+                <!-- Products Grid -->
+                <div class="row g-3 mb-5 d-none" id="productsContainer">
+                    Products will be loaded here
                 </div>
 
                 <!-- Load More Button -->
@@ -221,6 +226,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
 
+    <!-- <div class="bg-danger" id="result"></div> -->
 
 
     <!-- Backdrop for Cart -->

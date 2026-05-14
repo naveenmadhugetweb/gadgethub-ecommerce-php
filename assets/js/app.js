@@ -1,4 +1,4 @@
-
+// Page Loading Time It Will Calling DOM
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     // alert('hi', urlParams);
@@ -10,6 +10,18 @@ document.addEventListener("DOMContentLoaded", function () {
         var myModal = new bootstrap.Modal(document.getElementById('cartModalCenter'));
         myModal.show();
     }
+
+        // Calling PHP file
+        fetch("includes/loadProducts.php")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerHTML = data;
+            })
+            .catch(error => {
+                console.log("Error:", error);
+            });
+
+            // console.log("hiii");
 });
 
 
