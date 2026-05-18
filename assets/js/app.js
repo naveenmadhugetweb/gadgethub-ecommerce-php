@@ -1,5 +1,5 @@
 // Page Loading Time It Will Calling DOM
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {       // async for await
     const urlParams = new URLSearchParams(window.location.search);
     // alert('hi', urlParams);
     // console.log("hellow", urlParams);
@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
         var myModal = new bootstrap.Modal(document.getElementById('cartModalCenter'));
         myModal.show();
     }
-
-        // Calling PHP file
+/*
+        // Calling PHP file 
+        // this method not possible to filter or search and more so commented
         fetch("includes/loadProducts.php")
             .then(response => response.text())
             .then(data => {
@@ -20,26 +21,22 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => {
                 console.log("Error:", error);
             });
+*/
+        await loadProducts();
+        renderProducts();
+        setupEventListeners();
+        updatePriceDisplay();
+    });
+    
 
-            // console.log("hiii");
-});
+    // Load Product Data
+let products = [];
+async function loadProducts() {
+    const response = await fetch('includes/getProducts.php');
+        products = await response.json();
+        //console.log("helo", products);
 
-
-// Product Data
-const products = [
-    {id:1, name:"iPhone 15 Pro Max", price:99999, oldPrice:119999, category:"electronics", rating:4.9, image:"📱", discount:17},
-    {id:2, name:"Samsung Galaxy S24 Ultra", price:84999, oldPrice:99999, category:"electronics", rating:4.7, image:"📱", discount:15},
-    {id:3, name:"Nike Air Jordan 1", price:12999, oldPrice:15999, category:"fashion", rating:4.8, image:"👟", discount:19},
-    {id:4, name:"Sony WH-1000XM5 Headphones", price:29999, oldPrice:34999, category:"electronics", rating:4.9, image:"🎧", discount:14},
-    {id:5, name:"Levis 511 Slim Fit Jeans", price:3999, oldPrice:4999, category:"fashion", rating:4.6, image:"👖", discount:20},
-    {id:6, name:"MacBook Air M3", price:114999, oldPrice:129999, category:"electronics", rating:4.9, image:"💻", discount:12},
-    {id:7, name:"Adidas Ultraboost 22", price:14999, oldPrice:17999, category:"fashion", rating:4.7, image:"👟", discount:17},
-    {id:8, name:"Kindle Paperwhite 2024", price:13999, oldPrice:15999, category:"books", rating:4.8, image:"📖", discount:13},
-    {id:9, name:"Apple Watch Series 9", price:44999, oldPrice:49999, category:"electronics", rating:4.8, image:"⌚", discount:10},
-    {id:10, name:"Ray-Ban Wayfarer Sunglasses", price:8999, oldPrice:11999, category:"fashion", rating:4.7, image:"🕶️", discount:25},
-    {id:11, name:"Dyson V15 Vacuum", price:59999, oldPrice:69999, category:"home", rating:4.9, image:"🧹", discount:14},
-    {id:12, name:"Philips Air Fryer XL", price:12999, oldPrice:15999, category:"home", rating:4.6, image:"🍟", discount:19}
-];
+}
 
 let cart = [];
 let currentCategory = 'all';
@@ -58,17 +55,6 @@ const priceValue = document.getElementById('priceValue');
 
 const profileIcon = document.getElementById('profile');
 
-
-// window.alert("hi");
-// document.write("hello",typeof searchInput);
-
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    renderProducts();
-    setupEventListeners();
-    updatePriceDisplay();
-});
 
 // Event Listeners
 function setupEventListeners() {
@@ -118,10 +104,10 @@ function setupEventListeners() {
 function renderProducts() {
     // const searchTerm = searchInput.value.toLowerCase();
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
-    let filteredProducts = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm);
-        const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+    // console.log("HI", products);
+    let filteredProducts = products.filter(product => { // filter will return true if match found otherwise return false.
+        const matchesSearch = product.product_name.toLowerCase().includes(searchTerm);              // name into product_name fr product search
+        const matchesCategory = currentCategory === 'all' || product.category_name === currentCategory;
         const matchesPrice = product.price <= priceFilter;
         return matchesSearch && matchesCategory && matchesPrice;
     });
@@ -130,13 +116,13 @@ function renderProducts() {
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
             <div class="card product-card h-100 position-relative overflow-hidden">
                 ${product.discount ? `<span class="discount-badge">${product.discount}% OFF</span>` : ''}
-                <div class="product-image">${product.image}</div>
+                <div class="product-image"> <img class="w-100" src="/GADGETHUB/uploads/${product.image}"></div>       <!-- here,src accept absolute url -->
                 <div class="card-body p-3">
-                    <h6 class="card-title fw-semibold mb-2">${product.name}</h6>
+                    <h6 class="card-title fw-semibold mb-2">${product.product_name}</h6>
                     <div class="mb-2">
                         <div class="d-flex align-items-center mb-1">
                             <span class="price-highlight me-2">₹${product.price.toLocaleString()}</span>
-                            ${product.oldPrice ? `<span class="text-muted text-decoration-line-through small">₹${product.oldPrice.toLocaleString()}</span>` : ''}
+                            ${product.price ? `<!-- <span class="text-muted text-decoration-line-through small">₹${product.price.toLocaleString()}</span> -->` : ''}         <!-- need to update old price field in db later -->
                         </div>
                         <div class="d-flex align-items-center gap-1 small">
                             <i class="fas fa-star stars"></i>
