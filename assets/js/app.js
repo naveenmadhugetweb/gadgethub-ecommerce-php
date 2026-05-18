@@ -34,6 +34,12 @@ let products = [];
 async function loadProducts() {
     const response = await fetch('includes/getProducts.php');
         products = await response.json();
+        // in database id and price field are string means varchar so need to convert into numerical for add to cart and some other process.
+        products = products.map(product => ({
+        ...product,
+        id: parseInt(product.id),
+        price: parseFloat(product.price)
+        }));
         //console.log("helo", products);
 
 }
@@ -179,9 +185,9 @@ function updateCartUI() {
     } else {
         cartItemsContainer.innerHTML = cart.map((item, index) => `
             <div class="d-flex align-items-center p-3 border-bottom">
-                <img src="#" class="cart-item-image rounded me-3" alt="${item.name}">
+                <img src="/GADGETHUB/uploads/${item.image}" class="cart-item-image rounded me-3" alt="${item.product_name}">
                 <div class="flex-grow-1">
-                    <h6 class="mb-1">${item.name}</h6>
+                    <h6 class="mb-1">${item.product_name}</h6>
                     <div class="d-flex align-items-center gap-2">
                         <span class="fw-bold text-warning">₹${item.price.toLocaleString()}</span>
                         <span class="badge bg-light text-dark">${item.quantity}</span>
