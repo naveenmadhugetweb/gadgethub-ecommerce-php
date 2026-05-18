@@ -80,21 +80,23 @@ if (!isset($_SESSION['user_id'])) {
                             <a href="#" class="list-group-item list-group-item-action active fw-semibold" data-category="all">
                                 <i class="fas fa-th-large me-2 text-warning"></i>All Products
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="electronics">
-                                <i class="fas fa-laptop me-2"></i>Electronics
+                            <a href="#" class="list-group-item list-group-item-action" data-category="earbuds">
+                                <i class="fas fa-headphones me-2"></i>Earbuds
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="fashion">
-                                <i class="fas fa-tshirt me-2"></i>Fashion
+                            <a href="#" class="list-group-item list-group-item-action" data-category="smartphones">
+                                <i class="fas fa-mobile me-2"></i>Smartphones
                             </a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="home">
-                                <i class="fas fa-home me-2"></i>Home & Living
+                                <i class="fas fa-laptop me-2"></i>Laptop
                             </a>
+<!--
                             <a href="#" class="list-group-item list-group-item-action" data-category="books">
                                 <i class="fas fa-book me-2"></i>Books
                             </a>
                             <a href="#" class="list-group-item list-group-item-action" data-category="sports">
                                 <i class="fas fa-dumbbell me-2"></i>Sports
                             </a>
+ -->                            
                         </div>
                     </div>
                 </div>
@@ -143,12 +145,12 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
 
                 <!-- Products Grid -->
-                <div class="row g-3 mb-5" id="result">
+                <div class="row g-3 mb-5 d-none" id="result">
                      Products will be loaded here
                 </div>
 
                 <!-- Products Grid -->
-                <div class="row g-3 mb-5 d-none" id="productsContainer">
+                <div class="row g-3 mb-5 " id="productsContainer">
                     Products will be loaded here
                 </div>
 
@@ -207,13 +209,13 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                     <div class="card-body pt-0">
                         <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item list-group-item-action active fw-semibold" data-category="all">
+                            <a href="#" class="list-group-item list-group-item-action fw-semibold">
                                 <i class="bi bi-bag text-warning me-2"></i>Orders
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="electronics">
+                            <a href="#" class="list-group-item list-group-item-action">
                                 <i class="bi bi-heart me-2"></i>Wishlist
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action" data-category="fashion">
+                            <a href="#" class="list-group-item list-group-item-action">
                                 <i class="bi bi-gear me-2"></i>Settings
                             </a>
                             <form action="auth/logout.php?logout=success"  method="post" class="p-2 list-group-item list-group-item-action">
