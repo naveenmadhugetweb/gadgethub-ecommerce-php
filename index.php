@@ -240,7 +240,7 @@ if (!isset($_SESSION['user_id'])) {
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <h5 class="fw-bold mb-3">
-                        <i class="fas fa-shopping-bag me-2 text-warning"></i>E-Shop
+                        <i class="fas fa-shopping-bag me-2 text-warning"></i>GadgetHub-Shop
                     </h5>
                     <p class="opacity-75">India's largest online store. Best prices, fastest delivery, and top customer service.</p>
                     <div class="d-flex gap-2">
@@ -296,7 +296,7 @@ if (!isset($_SESSION['user_id'])) {
             </div>
             <hr class="my-4 opacity-25">
             <div class="text-center opacity-75">
-                <p>&copy; 2026 E-Shop. All rights reserved | Made with <i class="fas fa-heart text-danger"></i> in India</p>
+                <p>&copy; 2026 GadgetHub-Shop. All rights reserved | Made with <i class="fas fa-heart text-danger"></i> in India</p>
             </div>
         </div>
     </footer>

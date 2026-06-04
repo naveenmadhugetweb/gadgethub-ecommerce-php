@@ -31,13 +31,13 @@ if (isset($_POST['add_product'])) {
             // $_SESSION['user_id'] = $userData['id'];
             // $_SESSION['user_name'] = $userData['name'];
             header("Location: ../admin/category/earbuds-details.php");exit;
-        }elseif($cName == 'Smartphones'){
+        }elseif($cName == 'smartphones'){
 
             header("Location: ../admin/products/add-smartphones-details.php");exit;
             var_dump("hi");exit;
         }
         elseif($cName == 'Laptops'){
-           var_dump("hi");exit;
+           var_dump("Not Implemented Yet! Process Ongoing! Please Go Back");exit;
         }else{
 
             $_SESSION['error'] = "Please select other options";
@@ -75,7 +75,7 @@ if (isset($_POST['add_product'])) {
                                     </option>
                                 <?php } ?>
                             </select>
-                            <label class="form-label text-warning"> Don't select Other options than Laptop, Smartphones, Earbuds</label>
+                            <label class="form-label text-warning">Please don't select Other options than smartphones Or earbuds</label>
                         </div>
                         <button type="submit" name="add_product" class="btn btn-success">
                             Go to Add Product

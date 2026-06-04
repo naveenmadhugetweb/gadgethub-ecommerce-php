@@ -72,11 +72,15 @@ $products = mysqli_query($conn, $sql);
                 <i class="bi bi-speedometer2"></i>
                 Admin Dashboard
             </h2>
-            <p class="mb-0">
-                Welcome,
-                <strong><?= $_SESSION['user_name']; ?></strong>
-                (<?= $_SESSION['role']; ?>)
-            </p>
+            <div class="d-flex">
+                <p class="mb-0">
+                    Welcome,
+                    <strong><?= $_SESSION['user_name']; ?></strong>
+                    (<?= $_SESSION['role']; ?>)
+                </p>
+                <span class="nav-link px-3" href="#" id="adminprofile" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-user fs-5"></i></span>
+                <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> -->
+            </div>
         </div>
         <a href="category/add-category.php" class="btn btn-light btn-lg mt-3 mt-md-0">
             <i class="bi bi-plus-circle"></i>
@@ -199,3 +203,30 @@ $products = mysqli_query($conn, $sql);
         </div>
     </div>
 </div>
+
+<div class="offcanvas offcanvas-end"  id="offcanvasRight">
+  <div class="offcanvas-header">
+    <h5>Admin Profile Options</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">   
+    <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action fw-semibold">
+            <i class="bi bi-bag text-warning me-2"></i>Feature1
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-heart me-2"></i>Feature2
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-gear me-2"></i>Feature3
+        </a>
+        <form action="/GADGETHUB/auth/logout.php?logout=success"  method="post" class="p-2 list-group-item list-group-item-action">
+            <button type="submit" class="border-0 bg-transparent text-start w-100" style="background-color:noen;"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
+        </form>
+    </div>
+  </div>
+</div>
+<!-- Custom JS -->
+<script src="/GadgetHub/assets/js/validation.js"></script> 
+<!-- custom js Must be end of the html docs.-->
+<!-- WHY: If header in included file then some elements will readed before html docs loaded -->
